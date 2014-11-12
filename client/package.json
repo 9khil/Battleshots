@@ -1,0 +1,15 @@
+{
+  "name": "BattleshotsClient",
+  "version": "0.0.1",
+  "description": "",
+  "dependencies": {
+ 	"socket.io-client": "1.2.x",
+	"rpi-ws2801": "0.0.3"
+  },
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "9khil",
+  "license": "ISC"
+}

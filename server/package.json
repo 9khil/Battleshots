@@ -1,10 +1,9 @@
 {
-  "name": "Battleshots",
+  "name": "BattleshotsServer",
   "version": "0.0.1",
   "description": "Battleshots by JK, Mickey, Stian & 9khil",
   "dependencies": {
- 	"socket.io": "1.x.x",
-	"rpi-ws2801": "0.0.3"
+ 	"socket.io": "1.x.x"
   },
   "main": "server.js",
   "scripts": {

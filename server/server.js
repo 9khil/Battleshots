@@ -1,13 +1,30 @@
-var io = require('socket.io')(80);
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+var serverPort = 1234,
+	players = [];
+
+server.listen(serverPort);
+
+console.log("Listening on port: " + serverPort);
+
+app.get('/', function (req, res) {
+  res.sendfile(__dirname + '/index.html');
+});
 
 io.on('connection', function (socket) {
-  io.emit('this', { will: 'be received by everyone'});
+  console.log("Client connected");
 
-  socket.on('private message', function (from, msg) {
-    console.log('I received a private message by ', from, ' saying ', msg);
-  });
-
-  socket.on('disconnect', function () {
-    io.sockets.emit('user disconnected');
+  socket.emit('event', { hello: 'world' });
+  socket.on('identification', function (data) {
+    console.log(data);
   });
 });
+
+function addPlayer(){
+	if(players.length === 0){
+
+	}	
+}
+
