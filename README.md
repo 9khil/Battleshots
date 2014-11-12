@@ -5,7 +5,7 @@ by JK, Stian, Mickey & 9khil
 
 You need node and npm installed globally: http://nodejs.org/
 
-Run npm install on root level to install dependencies:
+Clone repo and run 'npm install' on root level to install dependencies:
 ```sh
 $ npm install
 ```
