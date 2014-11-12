@@ -1,0 +1,24 @@
+{
+  "name": "Battleshots",
+  "version": "0.0.1",
+  "description": "Battleshots by JK, Mickey, Stian & 9khil",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/9khil/Battleshots.git"
+  },
+  "keywords": [
+    "battleshots",
+    "battleship",
+    "iot"
+  ],
+  "author": "9khil",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/9khil/Battleshots/issues"
+  },
+  "homepage": "https://github.com/9khil/Battleshots"
+}
