@@ -1,3 +1,6 @@
 # Ignoring node_modules. Use npm install to install these
-
 node_modules/
+
+.DS_Store
+
+
