@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "Battleshots by JK, Mickey, Stian & 9khil",
   "dependencies": {
- 	"socket.io": "1.x.x"
+ 	"socket.io": "1.x.x",
+	"express": "4.10.x"
   },
   "main": "server.js",
   "scripts": {

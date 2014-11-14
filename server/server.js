@@ -9,10 +9,6 @@ server.listen(serverPort);
 
 console.log("Listening on port: " + serverPort);
 
-app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/index.html');
-});
-
 io.on('connection', function (socket) {
   console.log("Client connected");
 
@@ -20,8 +16,8 @@ io.on('connection', function (socket) {
   socket.on('identification', function (data) {
    	if(addPlayer(data, socket.conn.id)){
    		//succes
-   		console.log("success");
-   		io.sockets.connected[socket.conn.id].emit('event', {hello: 'world'}); //only sending to requester
+   		console.log("Player " + data + " connected.");
+      io.sockets.connected[socket.conn.id].emit('event', {status: 'Hello!'});
    		
    	}
    	else{
