@@ -16,7 +16,7 @@ io.on('connection', function (socket) {
   socket.on('identification', function (data) {
    	if(addPlayer(data, socket.conn.id)){
    		//succes
-   		console.log("Player " + data + " connected.");
+   	  console.log("Player " + data + " connected.");
       io.sockets.connected[socket.conn.id].emit('event', {status: 'Hello!'});
    		
    	}

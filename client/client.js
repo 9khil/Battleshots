@@ -20,13 +20,38 @@ Server setup END
 *************/
 
 
-console.log("Connecting to server..");
-
+/****************
+Connection between tablet and client
+*****************/
 io.on('connection', function (socket) {
-  console.log("Client connected . server");
+  console.log("Tablet connected.");
+
+
+  socket.on('playerName', function(data){
+    //playerName
+    console.log("Player name: " + data); 
+    initBoard();
+  });
+
+
+
+  /***************
+    Messages to Tablet
+  ****************/
+  function initBoard(){
+    //init when both ready
+    socket.emit('board', 'init');
+  };
+
 });
 
-socket.on('connect', function(){
+
+
+/****************
+Tablet and client connection END
+****************/
+
+/*socket.on('connect', function(){
   	console.log("Connected to server!");
   	console.log("Sending identification..");
     
@@ -39,3 +64,4 @@ socket.on('connect', function(){
     	console.log("Disconnected from server..");
     });
 });
+*/

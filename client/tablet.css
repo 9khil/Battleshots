@@ -1,0 +1,49 @@
+#boardContainer{
+	display: none;
+}
+
+#board span{
+	display: inline-block;
+	height: 20px;
+	width: 20px;
+	background-color: lightblue;
+	border: 1px solid white;
+}
+
+#board span:hover{
+	
+}
+
+#board .spacer{
+	height: 0;
+	width: 0;
+}
+
+#board .digit{
+	background: none;
+	border: 1px solid grey;
+}
+
+#boardLetters span{
+	display: inline-block;
+	height: 20px;
+	width: 20px;
+	border: 1px solid grey;
+	text-align: center;
+}
+
+
+/****
+Boats
+*****/
+#boat1{
+	background-color: red;
+	width: 20px;
+	height: 20px;
+}
+
+#boat2{
+	background-color: green;
+	width: 20px;
+	height: 40px;
+}
