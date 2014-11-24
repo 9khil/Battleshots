@@ -1,0 +1,370 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		  <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+		  <script src="http://development.indern.com/battleship/jquery.ui.touch-punch.js"></script>
+
+	</head>
+	<body>
+
+	<style>
+
+	.container{
+		width: 900px;
+		margin: 0 auto;
+	}
+
+	.container .left{
+		width: 650px;
+		float: left;
+	}
+	.container .right{
+		width: 250px;
+		float: left;
+	}
+
+	.ui-draggable { -ms-touch-action: none; }
+
+	textarea{
+		width: 500px;
+		height: 100px;
+		margin-top: 50px;
+	}
+	div span{
+		background-color: lightblue;
+		display: inline-block;
+		width: 40px;
+		height: 40px;
+		border: 1px solid grey;
+		margin-right: -6px;
+		margin-bottom: -6px;
+
+	}
+
+	div span.letter,
+	div span.digit{
+		text-align: center;
+		color: #fff;
+		line-height: 40px;
+		background-color: grey;
+	}
+
+	div span.letter{
+		line-height: normal;
+	}
+
+	.boat{
+		display: inline-block;
+		width: 40px;
+		height: 36px;
+		background-color: grey;
+		text-align: center;
+		color: #fff;
+		line-height: 40px;
+	}
+
+	.boat2{
+		width: 80px;
+	}
+
+	.boat3{
+		width: 120px;
+	}
+
+	.boat4{
+		width: 160px;
+	}
+
+	.ui-state-highlight{
+		background-color: red;
+	}
+	</style>
+
+	<script>
+		$(document).ready(function(){
+			var leftBoundaries = {"boat1": 400, "boat2": 360, "boat3": 320, "boat4": 280};
+			var myDropPositioning = {"boat1": 'left top', 'boat2': 'left top', 'boat3': 'middle top', 'boat4': 'left-40 top'};
+			var atDropPositioning = {"boat1": 'left top', 'boat2': 'left top', 'boat3': 'middle top', 'boat4': 'left top'};
+			var dropPositionModifier = {"boat1": 0, "boat2": 0, "boat3": -1, "boat4": -1}; //when dropping boats, target is not always correct. These modifiers will fix that.
+			
+			$( ".boat" ).draggable({
+				grid: [ 40, 36 ],
+				drag: function(event, ui){
+					/*
+					if(ui.position.left >= leftBoundaries[$(this).attr('id')]){
+			        	ui.position.left = leftBoundaries[$(this).attr('id')];
+			        }
+
+					if(ui.position.left < 0){
+		      			ui.position.left = 0;
+		      		}
+
+		      		*/
+						
+				}
+			});
+
+			$( ".board div span" ).droppable({
+		      	over: function(event, ui) {
+		      	},
+			    out: function(event, ui) {
+			        $("#draggable").draggable("option", "grid", false);
+			    },
+		      	drop: function( event, ui ) {
+		      		if(typeof ui.draggable[0] !== "undefined"){
+
+		      			ui.draggable.position({
+					      		of: $(this),
+		    	    			my: myDropPositioning[ui.draggable[0].classList[1]],
+		        				at: atDropPositioning[ui.draggable[0].classList[1]]
+	        			});
+
+			     	}
+		      		
+		      		//fix. dont call imOnaBoat two times
+		      		if(isValidPosition(event)){
+		      			log("Dropped " + event.toElement.id + " onto " + whereIsMyBoat(event, ui).position);	
+		      		}
+			      	else{
+			      		resetBoat(ui);
+			      	}
+			      	
+		      	}
+		    });
+
+		    function isValidPosition(event){
+		    	var targetPosition = event.target.classList[0]; //boat drop position
+		    	var actualPosition = parseInt(targetPosition.substring(1)) + dropPositionModifier[event.toElement.id]; //actual drop position, fixed with the array dropPositionModifier
+		    	var boatType = event.toElement.id;
+		   
+		    	if(actualPosition !== 0 && targetPosition !== 'digit'){
+		    		
+		    		//see if boat it too far right
+		    		if((boatType === "boat4" && actualPosition+3<=10) || (boatType === "boat3" && actualPosition+2<=10) || (boatType === "boat2" && actualPosition+1<=10) || (boatType === "boat1") && actualPosition<=10){
+		    				return true;
+		    		}
+		    		else{
+		    			return false;
+		    		}
+		    	}	
+		    	else{
+		    		return false;
+		    	}
+
+		    }
+
+		    function whereIsMyBoat(event, ui){
+
+		    	var position = "";
+		    	var targetPosition = event.target.classList[0]; //boat drop position
+
+		    	if(event.toElement.id === "boat1"){
+		    		position = targetPosition;
+				}
+		    	if(event.toElement.id === "boat2"){ 	//target + one to the right
+			    	position = targetPosition + " " + targetPosition.substring(0,1) + (parseInt(targetPosition.substring(1))+1);
+		    	}
+		    	else if(event.toElement.id === "boat3"){	//target + one to the left and one to the right
+		    		position = targetPosition.substring(0,1) + (parseInt(targetPosition.substring(1))-1) + " " + targetPosition +  " " + targetPosition.substring(0,1) + (parseInt(targetPosition.substring(1))+1);
+		    	}
+		    	else if(event.toElement.id === "boat4"){	//target + one to the left and two to the right
+		    		position = targetPosition.substring(0,1) + (parseInt(targetPosition.substring(1))-1) + " " + targetPosition +  " " + targetPosition.substring(0,1) + (parseInt(targetPosition.substring(1))+1) + " " + targetPosition.substring(0,1) + (parseInt(targetPosition.substring(1))+2);
+		    	}
+
+		    	return {"boat": event.target.classList[0], "position": position};
+		    	
+		    }
+
+		    function log(message){
+		    	$("#console").prepend(message + "\n");
+		    }
+
+		    function resetBoat(ui){
+		    	$(ui.draggable[0]).css("top", "0px");
+		      	$(ui.draggable[0]).css("left", "0px");
+		    }
+			
+		});
+	</script>
+
+		<div class="container">
+			<div class="left">
+				<div class="board">
+					<div class="letterRow">
+						<span class="digit">&nbsp;</span>
+						<span class="digit">1</span>
+						<span class="digit">2</span>
+						<span class="digit">3</span>
+						<span class="digit">4</span>
+						<span class="digit">5</span>
+						<span class="digit">6</span>
+						<span class="digit">7</span>
+						<span class="digit">8</span>
+						<span class="digit">9</span>
+						<span class="digit">10</span>
+					</div>
+
+					<div class="rowA">
+						<span class="letter">A</span>
+						<span class="A1">&nbsp;</span>
+						<span class="A2">&nbsp;</span>
+						<span class="A3">&nbsp;</span>
+						<span class="A4">&nbsp;</span>
+						<span class="A5">&nbsp;</span>
+						<span class="A6">&nbsp;</span>
+						<span class="A7">&nbsp;</span>
+						<span class="A8">&nbsp;</span>
+						<span class="A9">&nbsp;</span>
+						<span class="A10">&nbsp;</span>
+					</div>
+
+					<div class="rowB">
+						<span class="letter">B</span>
+						<span class="B1">&nbsp;</span>
+						<span class="B2">&nbsp;</span>
+						<span class="B3">&nbsp;</span>
+						<span class="B4">&nbsp;</span>
+						<span class="B5">&nbsp;</span>
+						<span class="B6">&nbsp;</span>
+						<span class="B7">&nbsp;</span>
+						<span class="B8">&nbsp;</span>
+						<span class="B9">&nbsp;</span>
+						<span class="B10">&nbsp;</span>
+					</div>
+
+					<div class="rowC">
+						<span class="letter">C</span>
+						<span class="C1">&nbsp;</span>
+						<span class="C2">&nbsp;</span>
+						<span class="C3">&nbsp;</span>
+						<span class="C4">&nbsp;</span>
+						<span class="C5">&nbsp;</span>
+						<span class="C6">&nbsp;</span>
+						<span class="C7">&nbsp;</span>
+						<span class="C8">&nbsp;</span>
+						<span class="C9">&nbsp;</span>
+						<span class="C10">&nbsp;</span>
+					</div>
+
+					<div class="rowD">
+						<span class="letter">D</span>
+						<span class="D1">&nbsp;</span>
+						<span class="D2">&nbsp;</span>
+						<span class="D3">&nbsp;</span>
+						<span class="D4">&nbsp;</span>
+						<span class="D5">&nbsp;</span>
+						<span class="D6">&nbsp;</span>
+						<span class="D7">&nbsp;</span>
+						<span class="D8">&nbsp;</span>
+						<span class="D9">&nbsp;</span>
+						<span class="D10">&nbsp;</span>
+					</div>
+
+					<div class="rowE">
+						<span class="letter">E</span>
+						<span class="E1">&nbsp;</span>
+						<span class="E2">&nbsp;</span>
+						<span class="E3">&nbsp;</span>
+						<span class="E4">&nbsp;</span>
+						<span class="E5">&nbsp;</span>
+						<span class="E6">&nbsp;</span>
+						<span class="E7">&nbsp;</span>
+						<span class="E8">&nbsp;</span>
+						<span class="E9">&nbsp;</span>
+						<span class="E10">&nbsp;</span>
+					</div>
+
+					<div class="rowF">
+						<span class="letter">F</span>
+						<span class="F1">&nbsp;</span>
+						<span class="F2">&nbsp;</span>
+						<span class="F3">&nbsp;</span>
+						<span class="F4">&nbsp;</span>
+						<span class="F5">&nbsp;</span>
+						<span class="F6">&nbsp;</span>
+						<span class="F7">&nbsp;</span>
+						<span class="F8">&nbsp;</span>
+						<span class="F9">&nbsp;</span>
+						<span class="F10">&nbsp;</span>
+					</div>
+
+					<div class="rowG">
+						<span class="letter">G</span>
+						<span class="G1">&nbsp;</span>
+						<span class="G2">&nbsp;</span>
+						<span class="G3">&nbsp;</span>
+						<span class="G4">&nbsp;</span>
+						<span class="G5">&nbsp;</span>
+						<span class="G6">&nbsp;</span>
+						<span class="G7">&nbsp;</span>
+						<span class="G8">&nbsp;</span>
+						<span class="G9">&nbsp;</span>
+						<span class="G10">&nbsp;</span>
+					</div>
+
+					<div class="rowH">
+						<span class="letter">H</span>
+						<span class="H1">&nbsp;</span>
+						<span class="H2">&nbsp;</span>
+						<span class="H3">&nbsp;</span>
+						<span class="H4">&nbsp;</span>
+						<span class="H5">&nbsp;</span>
+						<span class="H6">&nbsp;</span>
+						<span class="H7">&nbsp;</span>
+						<span class="H8">&nbsp;</span>
+						<span class="H9">&nbsp;</span>
+						<span class="H10">&nbsp;</span>
+					</div>
+
+					<div class="rowI">
+						<span class="letter">I</span>
+						<span class="I1">&nbsp;</span>
+						<span class="I2">&nbsp;</span>
+						<span class="I3">&nbsp;</span>
+						<span class="I4">&nbsp;</span>
+						<span class="I5">&nbsp;</span>
+						<span class="I6">&nbsp;</span>
+						<span class="I7">&nbsp;</span>
+						<span class="I8">&nbsp;</span>
+						<span class="I9">&nbsp;</span>
+						<span class="I10">&nbsp;</span>
+					</div>
+
+					<div class="rowJ">
+						<span class="letter">J</span>
+						<span class="J1">&nbsp;</span>
+						<span class="J2">&nbsp;</span>
+						<span class="J3">&nbsp;</span>
+						<span class="J4">&nbsp;</span>
+						<span class="J5">&nbsp;</span>
+						<span class="J6">&nbsp;</span>
+						<span class="J7">&nbsp;</span>
+						<span class="J8">&nbsp;</span>
+						<span class="J9">&nbsp;</span>
+						<span class="J10">&nbsp;</span>
+					</div>
+				</div>
+			</div><!-- LEFT END -->
+
+			<div class="right">
+				<span id="boat1" class="boat boat1" draggable="true">Båt</span>
+				<br/>		
+				<span id="boat2" class="boat boat2" draggable="true">Båt2</span>
+				<br/>
+				<span id="boat3" class="boat boat3" draggable="true">Båt3</span>
+				<br/>
+				<span id="boat4" class="boat boat4" draggable="true">Båt4</span>
+			
+				<textarea id="console"></textarea>
+
+			</div><!-- RIGHT END -->
+		</div>
+
+		
+
+
+
+	</body>
+</html>
