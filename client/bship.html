@@ -1,7 +1,11 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		
+		<title>Battleshots by JK, Stian, Mickey & Nikhil</title>
+		<link rel="stylesheet" type="text/css" href="/tablet.css"/>
+		<script src="/node_modules/socket.io-client/socket.io.js"></script>
+		<script src="/tablet.js"></script>
+
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		  <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 		  <script src="http://development.indern.com/battleship/jquery.ui.touch-punch.js"></script>
@@ -191,6 +195,15 @@
 
 		<div class="container">
 			<div class="left">
+				<div id="playerName"></div>
+				<div id="identification">
+					<form id="identificationForm">
+						<input id="identificationName" type="text" required="required" placeholder="Enter name"/>
+						<button id="identification btn">Enter</button>
+					</form>
+				</div>
+
+
 				<div class="board">
 					<div class="letterRow">
 						<span class="digit">&nbsp;</span>
