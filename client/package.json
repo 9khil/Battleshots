@@ -6,6 +6,7 @@
   "socket.io": "1.x.x",
  	"socket.io-client": "1.2.x",
 	"rpi-ws2801": "0.0.3",
+	"microtime": "*.*.*",
 	"express": "4.10.x"
   },
   "main": "client.js",
