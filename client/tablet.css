@@ -1,49 +1,75 @@
-#boardContainer{
-	display: none;
-}
+.container{
+		width: 900px;
+		margin: 0 auto;
+	}
 
-#board span{
-	display: inline-block;
-	height: 20px;
-	width: 20px;
-	background-color: lightblue;
-	border: 1px solid white;
-}
+	.container .left{
+		width: 650px;
+		float: left;
+	}
+	.container .right{
+		width: 250px;
+		float: left;
+	}
 
-#board span:hover{
-	
-}
+	.ui-draggable { -ms-touch-action: none; }
 
-#board .spacer{
-	height: 0;
-	width: 0;
-}
+	.ui-draggable-dragging{
+		opacity: 0.6;
+	}
 
-#board .digit{
-	background: none;
-	border: 1px solid grey;
-}
+	textarea{
+		width: 500px;
+		height: 100px;
+		margin-top: 50px;
+	}
+	div span{
+		background-color: lightblue;
+		display: inline-block;
+		width: 40px;
+		height: 40px;
+		border: 1px solid grey;
+		margin-right: -6px;
+		margin-bottom: 0x;
 
-#boardLetters span{
-	display: inline-block;
-	height: 20px;
-	width: 20px;
-	border: 1px solid grey;
-	text-align: center;
-}
+	}
 
+	div span.letter,
+	div span.digit{
+		text-align: center;
+		color: #fff;
+		line-height: 40px;
+		background-color: lightcoral;
+	}
 
-/****
-Boats
-*****/
-#boat1{
-	background-color: red;
-	width: 20px;
-	height: 20px;
-}
+	div span.letter{
+		line-height: normal;
+	}
 
-#boat2{
-	background-color: green;
-	width: 20px;
-	height: 40px;
-}
+	.boat{
+		display: inline-block;
+		width: 40px;
+		height: 40px;
+		background-color: grey;
+		text-align: center;
+		color: #fff;
+		line-height: 40px;
+
+		position: absolute;
+	}
+
+	.boat2{
+		width: 80px;
+	}
+
+	.boat3{
+		width: 120px;
+	}
+
+	.boat4{
+		width: 160px;
+	}
+
+	.ui-state-highlight{
+		background-color: red;
+	}
