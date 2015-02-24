@@ -34,6 +34,12 @@ io.on('connection', function (socket) {
     initBoard();
   });
 
+socket.on('boatDropped', function(data){
+	//boat dropped
+console.log("boat dropped: " + data.position);
+
+bs.showBoat(data.position);
+});
 
 
   /***************
@@ -42,7 +48,6 @@ io.on('connection', function (socket) {
   function initBoard(){
     //init when both ready
     socket.emit('board', 'init');
-    bs.init;
   };
 
 });

@@ -1,7 +1,7 @@
 var leds = require('rpi-ws2801');
 var map = require('./gridMapper.js');
 
-var numberLeds = 50;
+var numberLeds = 100;
 
 // connecting to Raspberry Pi SPI
 leds.connect(numberLeds); // assign number of WS2801 LEDs
@@ -15,14 +15,9 @@ process.on( 'SIGINT', function() {
   process.exit( )
 })
 
-module.exports = {
-  init: function(){
+
     initializeGame();
-    setLight(map.gridMapper("C7"));
-  }
-}
-
-
+//    setLight(map.gridMapper("B1"));
 
 function initializeGame(){
   console.log("Initializing game..");
@@ -31,6 +26,14 @@ function initializeGame(){
   //set all leds to blue
   leds.fill(0,0,255);
 }
+
+module.exports = {
+	showBoat: function(pos){
+	setLight(map.gridMapper(pos));
+	}
+}
+
+
 
 function setLight(pos){
   setInterval(function() { 

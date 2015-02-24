@@ -1,6 +1,6 @@
 
 
-var socket = io.connect('http://localhost:1235'); //Must be directed to client.js with appropriate port number
+var socket = io.connect('http://192.168.0.111:1235'); //Must be directed to client.js with appropriate port number
 var board,
 	boardContainer;
 window.onload = function() {
@@ -81,6 +81,7 @@ $(document).ready(function(){
 		      		//fix. dont call imOnaBoat two times
 		      		if(isValidPosition(event, ui)){
 		      			log("Dropped " + event.toElement.id + " onto " + whereIsMyBoat(event, ui).position);	
+					socket.emit('boatDropped', {position: whereIsMyBoat(event, ui).position});
 		      		}
 			      	else{
 			      		resetBoat(ui);
