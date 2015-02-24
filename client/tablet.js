@@ -171,7 +171,7 @@ Response from RPi
 socket.on('board', function (data) {
 	console.log(data);
 	if(data === "init"){
-		initBoard();
+		//initBoard();
 	}
 });
 

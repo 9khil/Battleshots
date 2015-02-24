@@ -3,6 +3,7 @@ var app = express();
 var server = require('http').Server(app);
 var socket = require('socket.io-client')('http://localhost:1234'); //This must be directed to the battleshot server
 var io = require('socket.io')(server);
+var bs = require('./battleshots');
 
 /************
 Setting up server
@@ -41,6 +42,7 @@ io.on('connection', function (socket) {
   function initBoard(){
     //init when both ready
     socket.emit('board', 'init');
+    bs.init;
   };
 
 });

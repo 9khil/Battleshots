@@ -15,8 +15,14 @@ process.on( 'SIGINT', function() {
   process.exit( )
 })
 
-initializeGame();
-setLight(map.gridMapper("C7"));
+module.exports = {
+  init: function(){
+    initializeGame();
+    setLight(map.gridMapper("C7"));
+  }
+}
+
+
 
 function initializeGame(){
   console.log("Initializing game..");
