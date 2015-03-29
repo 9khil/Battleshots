@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
-var socket = require('socket.io-client')('http://localhost:1234'); //This must be directed to the battleshot server
+var socket = require('socket.io-client')('192.168.0.111:1234'); //This must be directed to the battleshot server
 var io = require('socket.io')(server);
 var bs = require('./battleshots');
 

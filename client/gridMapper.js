@@ -1,8 +1,11 @@
 var exports = module.exports = {};
 
-exports.gridMapper = function(input){  
+exports.gridMapper = function(inputArray){  
   var ledNumber = 0;
+  var ledArray = [];
   
+for(var i=0; i<inputArray.length;i++){
+var input = inputArray[i];
   var _abc = input.substring(0,1);
   var _123 = parseInt(input.substring(1,2));
   _123 = _123-1;
@@ -42,6 +45,10 @@ exports.gridMapper = function(input){
       ledNumber = 0;
       break;
   }
-  return ledNumber;
+
+ledArray.push(ledNumber);
+
+}
+  return ledArray;
   //console.log(ledNumber)
 }

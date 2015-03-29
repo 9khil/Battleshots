@@ -29,24 +29,32 @@ function initializeGame(){
 
 module.exports = {
 	showBoat: function(pos){
-	setLight(map.gridMapper(pos));
+	console.log("position in module exports/battleshots.js: " + pos);
+	var res = pos.split(" ");
+if(res){
+console.log(res);
+	setLight(map.gridMapper(res));
+}
 	}
 }
 
 
 
 function setLight(pos){
-  setInterval(function() { 
-  console.log("Setting led " + pos + " to red");
+ console.log("in setLight");
+for(var j=0; j<pos.length; j++){ 
+var tempLed = pos[j]; 
+ console.log("Setting led " + pos + " to red");
   for(i = 0; i<numberLeds; i++){
-    if(i == pos){
+    if(i == tempLed){
       leds.setColor(i, [255,0,0]);
     }else{
-      leds.setColor(i, [0,0,255]);
+     // leds.setColor(i, [0,0,255]);
     }
   }
+
   leds.update();
-  }, 2000)
+} 
 }
 
 
