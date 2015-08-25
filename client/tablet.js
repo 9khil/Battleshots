@@ -1,6 +1,6 @@
 
 
-var socket = io.connect('http://192.168.0.109:1235'); //Must be directed to client.js with appropriate port number
+var socket = io.connect('http://192.168.1.18:1235'); //Must be directed to client.js with appropriate port number
 var board,
 	boardContainer;
 window.onload = function() {
