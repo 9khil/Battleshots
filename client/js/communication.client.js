@@ -10,3 +10,8 @@ var socket = io('http://localhost:3000');
   socket.on('disconnect', function(){
     console.log("disconnect");
   });
+
+
+function sendMessageToServer(message){
+  socket.emit(message.messageType, message.messageContent);
+}

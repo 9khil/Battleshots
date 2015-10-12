@@ -4,12 +4,209 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Battleshots</title>
+
+    <script src="js/jquery-2.1.4.min.js"></script>
     <script src="node_modules/socket.io-client/socket.io.js"></script>
     <script src="js/communication.client.js"></script>
+    <script src="js/board.js"></script>
+
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/client.css">
+
   </head>
   <body>
+
+    <div id="stepOne">
+      <div class="container">
+        <div class="row">
+          <div class="twelve columns" style="margin-top: 25%">
+            <h4>Whats your name?</h4>
+            <input type="text" onkeydown="nameKeyup(event, this);"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="stepTwo">
+
+      <div class="container">
+
+        <div class="row">
+          <div class="twelve columns">
+            <h6>Welcome, <span id="name"></span></h6>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="twelve columns">
+            <h2>Battleshots</h2>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="twelve columns">
+            <div id="board">
+
+                <div class="letterRow">
+                  <span class="digit">&nbsp;</span>
+                  <span class="digit">1</span>
+                  <span class="digit">2</span>
+                  <span class="digit">3</span>
+                  <span class="digit">4</span>
+                  <span class="digit">5</span>
+                  <span class="digit">6</span>
+                  <span class="digit">7</span>
+                  <span class="digit">8</span>
+                  <span class="digit">9</span>
+                  <span class="digit">10</span>
+                </div>
+
+                <div class="rowA">
+      						<span class="letter">A</span>
+      						<span class="A1">&nbsp;</span>
+      						<span class="A2">&nbsp;</span>
+      						<span class="A3">&nbsp;</span>
+      						<span class="A4">&nbsp;</span>
+      						<span class="A5">&nbsp;</span>
+      						<span class="A6">&nbsp;</span>
+      						<span class="A7">&nbsp;</span>
+      						<span class="A8">&nbsp;</span>
+      						<span class="A9">&nbsp;</span>
+      						<span class="A10">&nbsp;</span>
+      					</div>
+
+      					<div class="rowB">
+      						<span class="letter">B</span>
+      						<span class="B1">&nbsp;</span>
+      						<span class="B2">&nbsp;</span>
+      						<span class="B3">&nbsp;</span>
+      						<span class="B4">&nbsp;</span>
+      						<span class="B5">&nbsp;</span>
+      						<span class="B6">&nbsp;</span>
+      						<span class="B7">&nbsp;</span>
+      						<span class="B8">&nbsp;</span>
+      						<span class="B9">&nbsp;</span>
+      						<span class="B10">&nbsp;</span>
+      					</div>
+
+      					<div class="rowC">
+      						<span class="letter">C</span>
+      						<span class="C1">&nbsp;</span>
+      						<span class="C2">&nbsp;</span>
+      						<span class="C3">&nbsp;</span>
+      						<span class="C4">&nbsp;</span>
+      						<span class="C5">&nbsp;</span>
+      						<span class="C6">&nbsp;</span>
+      						<span class="C7">&nbsp;</span>
+      						<span class="C8">&nbsp;</span>
+      						<span class="C9">&nbsp;</span>
+      						<span class="C10">&nbsp;</span>
+      					</div>
+
+      					<div class="rowD">
+      						<span class="letter">D</span>
+      						<span class="D1">&nbsp;</span>
+      						<span class="D2">&nbsp;</span>
+      						<span class="D3">&nbsp;</span>
+      						<span class="D4">&nbsp;</span>
+      						<span class="D5">&nbsp;</span>
+      						<span class="D6">&nbsp;</span>
+      						<span class="D7">&nbsp;</span>
+      						<span class="D8">&nbsp;</span>
+      						<span class="D9">&nbsp;</span>
+      						<span class="D10">&nbsp;</span>
+      					</div>
+
+      					<div class="rowE">
+      						<span class="letter">E</span>
+      						<span class="E1">&nbsp;</span>
+      						<span class="E2">&nbsp;</span>
+      						<span class="E3">&nbsp;</span>
+      						<span class="E4">&nbsp;</span>
+      						<span class="E5">&nbsp;</span>
+      						<span class="E6">&nbsp;</span>
+      						<span class="E7">&nbsp;</span>
+      						<span class="E8">&nbsp;</span>
+      						<span class="E9">&nbsp;</span>
+      						<span class="E10">&nbsp;</span>
+      					</div>
+
+      					<div class="rowF">
+      						<span class="letter">F</span>
+      						<span class="F1">&nbsp;</span>
+      						<span class="F2">&nbsp;</span>
+      						<span class="F3">&nbsp;</span>
+      						<span class="F4">&nbsp;</span>
+      						<span class="F5">&nbsp;</span>
+      						<span class="F6">&nbsp;</span>
+      						<span class="F7">&nbsp;</span>
+      						<span class="F8">&nbsp;</span>
+      						<span class="F9">&nbsp;</span>
+      						<span class="F10">&nbsp;</span>
+      					</div>
+
+      					<div class="rowG">
+      						<span class="letter">G</span>
+      						<span class="G1">&nbsp;</span>
+      						<span class="G2">&nbsp;</span>
+      						<span class="G3">&nbsp;</span>
+      						<span class="G4">&nbsp;</span>
+      						<span class="G5">&nbsp;</span>
+      						<span class="G6">&nbsp;</span>
+      						<span class="G7">&nbsp;</span>
+      						<span class="G8">&nbsp;</span>
+      						<span class="G9">&nbsp;</span>
+      						<span class="G10">&nbsp;</span>
+      					</div>
+
+      					<div class="rowH">
+      						<span class="letter">H</span>
+      						<span class="H1">&nbsp;</span>
+      						<span class="H2">&nbsp;</span>
+      						<span class="H3">&nbsp;</span>
+      						<span class="H4">&nbsp;</span>
+      						<span class="H5">&nbsp;</span>
+      						<span class="H6">&nbsp;</span>
+      						<span class="H7">&nbsp;</span>
+      						<span class="H8">&nbsp;</span>
+      						<span class="H9">&nbsp;</span>
+      						<span class="H10">&nbsp;</span>
+      					</div>
+
+      					<div class="rowI">
+      						<span class="letter">I</span>
+      						<span class="I1">&nbsp;</span>
+      						<span class="I2">&nbsp;</span>
+      						<span class="I3">&nbsp;</span>
+      						<span class="I4">&nbsp;</span>
+      						<span class="I5">&nbsp;</span>
+      						<span class="I6">&nbsp;</span>
+      						<span class="I7">&nbsp;</span>
+      						<span class="I8">&nbsp;</span>
+      						<span class="I9">&nbsp;</span>
+      						<span class="I10">&nbsp;</span>
+      					</div>
+
+      					<div class="rowJ">
+      						<span class="letter">J</span>
+      						<span class="J1">&nbsp;</span>
+      						<span class="J2">&nbsp;</span>
+      						<span class="J3">&nbsp;</span>
+      						<span class="J4">&nbsp;</span>
+      						<span class="J5">&nbsp;</span>
+      						<span class="J6">&nbsp;</span>
+      						<span class="J7">&nbsp;</span>
+      						<span class="J8">&nbsp;</span>
+      						<span class="J9">&nbsp;</span>
+      						<span class="J10">&nbsp;</span>
+      					</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
   </body>
 </html>
