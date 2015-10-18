@@ -1,134 +1,324 @@
 /*
-  ENUMS
+ENUMS
 */
-BOATS = {"Submarine" : 1, "Destroyer" : 2, "Cruiser" : 3, "Battleship" : 4, "Aircraft carrier":	5};
-FLEET = {"Submarines": 2,  "Destroyers" : 2, "Cruisers" : 2, "Battleships" : 1, "Aircraft carriers":	1};
-GRIDSTATES = {"Empty": 0, "Water": 1, "Boat" : 2, "Fire/Hit" : 3, "Miss" : 4};
-LETTERS = {"A": 1, "B": 2, "C" : 3, "D" : 4, "E" : 5, "F": 6, "G": 7, "H" : 8, "I" : 9, "J" : 10};
-GAMESTATES = {"WaitingForPlayer1": 0, "WaitingForPlayer2": 1, "WaitingForBothPlayers" : 2};
+BOATS = {
+    "Submarine": 1,
+    "Destroyer": 2,
+    "Cruiser": 3,
+    "Battleship": 4,
+    "AircraftCarrier": 5
+};
+FLEET = {
+    1: 2,   //Submarines
+    2: 2,   //Destroyers
+    3: 1,   //Cruisers
+    4: 1,   //Battleship
+    5: 1    //Aircraft carriers
+};
+ORIENTATION = [
+    "HORIZONTAL",
+    "VERTICAL"
+];
+GRIDSTATES = {
+    "Empty": 0,
+    "Water": 1,
+    "Boat": 2,
+    "Hit": 3,
+    "Miss": 4
+};
+LETTERS = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J"
+];
+NUMTOLETTERS = {
+    1: "A",
+    2: "B",
+    3: "C",
+    4: "D",
+    5: "E",
+    6: "F",
+    7: "G",
+    8: "H",
+    9: "I",
+    10: "J"
+};
+LETTERSTONUM = {
+    "A": 1,
+    "B": 2,
+    "C": 3,
+    "D": 4,
+    "E": 5,
+    "F": 6,
+    "G": 7,
+    "H": 8,
+    "I": 9,
+    "J": 10
+};
+RANKS = [
+    "Seaman Recruit",
+    "Seaman Apprentice",
+    "Seaman",
+    "Petty Officer",
+    "Chief Petty Officer",
+    "Ensign",
+    "Junior Lieutenant",
+    "Lieutenant",
+    "Lieutenant Commander",
+    "Commander",
+    "Captain",
+    "Rear Admiral",
+    "Vice Admiral",
+    "Admiral",
+    "Fleet Admiral",
+    "Scallywag",
+    "Pirate",
+    "Pirate Captain",
+    "Fleet Mascot",
+    "Captain's Parrot",
+    "Captain's Harlot"
+];
+GAMESTATES = {
+    "WaitingForPlayers": 0,
+    "WaitingForPlayer1": 1,
+    "WaitingForPlayer2": 2
+};
 
 /*
 OBJECTS RELATION
 
 game
-  has players
-    has unplaced boats
-    has board
-      has grid
-        has cells/status?
-      has placed boats
+has players
+  has unplaced boats
+  has board
+    has grid
+      has cells/status
+    has placed boats
+      has type, startCoords and orientation
 */
 
-function Game (){
-  this.player1;
-  this.player2;
+/*
+TEST CODE
+*/
+var game = new Game();
+var jk = game.registerNewPlayer(1, "JK");
+var nikhil = game.registerNewPlayer(2, "9khil");
+var stian = game.registerNewPlayer(3, "Stian");
+console.log(game.getPlayer(1));
+console.log(game.getPlayer(2));
 
-  this.gameState;
-  this.actionLog = [];
+function Game() {
+    this.player1;
+    this.player2;
 
-  this.registerNewPlayer = function (id, name) {
-    if(typeOf player1 == "undefined") {
-      this.player1 = new Player(id, name);
-    }
-    else {
-      this.player2 = new Player(id, name);
-    }
-  };
+    this.gameState;
+    this.actionLog = [];
 
-  this.getPlayer = function (playerId) {
-    if(typeOf this.player1 != "undefined" && this.player1.id == playerId) {
-      return this.player1;
-    }
-    else if(typeOf this.player2 != "undefined" && this.player2.id == playerId) {
-      return this.player2;
-    }
-  };
+    this.registerNewPlayer = function(id, name) {
+        if (typeof this.player1 === 'undefined') {
+            this.player1 = new Player(id, name);
+        } else if (typeof this.player2 === 'undefined') {
+            this.player2 = new Player(id, name);
+        } else {
+            return console.log("Game in progress.");
+        }
+    };
 
-  this.getOpponent = function (playerId) {
-    if(typeOf this.player1 != "undefined" && this.player1.id == playerId) {
-      return this.player2;
-    }
-    else if(typeOf this.player2 != "undefined" && this.player2.id == playerId) {
-      return this.player1;
-    }
-  };
+    this.getPlayer = function(playerId) {
+        if (typeof this.player1 !== 'undefined' && this.player1.id == playerId) {
+            return this.player1;
+        } else if (typeof this.player2 !== 'undefined' && this.player2.id == playerId) {
+            return this.player2;
+        }
+    };
 
-  this.shotAtOpponent = function (playerId, coords) {
+    this.getOpponent = function(playerId) {
+        if (typeof this.player1 !== 'undefined' && this.player1.id == playerId) {
+            return this.player2;
+        } else if (typeof this.player2 !== 'undefined' && this.player2.id == playerId) {
+            return this.player1;
+        }
+    };
 
-  };
+    this.shootAtOpponent = function(playerId, coords) {
+        var player = this.getPlayer(playerId);
+        if (typeof player !== 'undefined') {
+            if (this.gameState !== GAMESTATES.WaitingForPlayer1) {
+                var opponent = this.getOpponent(playerId);
+                if (typeof opponent !== 'undefined') {
+                    opponent.fireAt(coords);
+                    // Send both players round outcome
+                } else  {
+                    console.log("Unable to shoot at opponent. Player has no opponent");
+                }
+            } else {
+                console.log("Unable to shoot at opponent. It's not " + player.toString() + "'s turn!");
+            }
+        } else {
+            console.log("Unable to shoot at opponent. Cannot find player with id: " + playerId);
+        }
+    };
 
-  this.tryPlaceBoat = function (playerId, cords, boat) {
-
-  };
-
+    this.tryPlaceBoat = function(playerId, boat) {
+        var player = this.getPlayer(playerId);
+        if (typeof player !== 'undefined') {
+            if (player.tryPlaceBoat(boat)) {
+                // Send confirmation and updated board to player
+                console.log("Boat placed, " + player.toString());
+            } else {
+                // Send cannot complete action message
+                console.log("Boat could not be placed, " + player.toString());
+            }
+        } else {
+            console.log("Unable to place boat. Cannot find player with id: " + playerId);
+        }
+    };
 }
 
-function Player (id, name)
-{
-  this.id = id;
-  this.name = name;
-  this.board = new Board();
-  this.boats = [];
+function Player(id, name) {
+    this.id = id;
+    this.name = name;
+    this.rank = RANKS[Math.floor(Math.random() * RANKS.length)];
+    this.board = new Board();
+    this.availableBoats;
 
-  this.init = function () {
-    for(boat in BOATS) {
-      if (arrayHasOwnIndex(BOATS, boat)) {
-        //todo init player available boats
-      }
-    }
-  }
+    this.init = function() {
+        this.availableBoats = JSON.parse(JSON.stringify(FLEET));
+    };
 
-  this.fireAt = function (coords) {
+    this.fireAt = function(coords) {
 
-  };
+    };
 
-  this.init();
+    this.tryPlaceBoat = function(boat) {
+        if (this.availableBoats[boat.type] > 0) {
+            if (this.board.tryPlaceBoat(boat)) {
+                this.availableBoats[boat.type]--;
+                return true;
+            }
+        } else {
+            console.log(this.toString() + " does not have more boats of type: " + boat.type + ", to place.");
+        }
+        return false;
+    };
+
+    this.toString = function() {
+        return this.rank + " " + this.name;
+    };
+
+    this.init();
 }
 
-function Board ()
-{
-  this.grid = [];
-  this.boats = [];
+function Board() {
+    this.grid = [];
+    this.boatsOnBoard = [];
 
-  this.init = function () {
-    for(var letter = 1; i <= 10; i++) {
-      this.grid[letter] = [];
-      for(var num = 1; j <= 10; j++) {
-        this.grid[letter][num] = GRIDSTATES.Empty;
-      }
-    }
-  };
+    this.init = function() {
+        for (var i in LETTERS) {
+            this.grid[LETTERS[i]] = [];
+            for (var num = 1; num <= 10; num++) {
+                this.grid[LETTERS[i]][num] = GRIDSTATES.Empty;
+            }
+        }
+    };
 
-  this.playerView = function () {
+    this.playerView = function() {
+        return this.grid;
+    };
 
-  };
+    this.enemyView = function() {
+        var enemyView = []
+        for (var i in LETTERS) {
+            enemyView[LETTERS[i]] = [];
+            for (var num = 1; num <= 10; num++) {
+                if (this.grid[LETTERS[i]][num] !== GRIDSTATES.Hit || this.grid[LETTERS[i]][num] !== GRIDSTATES.Miss) {
+                    enemyView[LETTERS[i]][num] = GRIDSTATES.Water;
+                } else {
+                    enemyView[LETTERS[i]][num] = this.grid[LETTERS[i]][num];
+                }
+            }
+        }
+        return enemyView;
+    };
 
-  this.enemyView = function () {
+    this.tryPlaceBoat = function(boatToPlace) {
+        //ADD CHECK FOR EDGE CASES EITHER HERE OR IN BOAT CONSTRUCTOR
+        for (var i = 0; i < this.boatsOnBoard.length; i++) {
+            if (this.boatsOnBoard[i].collidesWith(boatToPlace)) {
+                return false;
+            }
+        }
+        this.placeBoat(boatToPlace);
+        return true;
+    };
 
-  };
+    this.placeBoat = function(boat) {
+        var coords = boat.coordinates();
+        for (var i = 0; i < coords.length; i++) {
+            this.grid[coords[i][0]][coords[i][1]] = GRIDSTATES.Boat;
+        }
+        this.boatsOnBoard.push(boat);
+    };
 
-  this.tryPlaceBoat = function (boat) {
+    this.removeBoat = function(boat) {
+        var coords = boat.coordinates();
+        for (var i = 0; i < coords.length; i++) {
+            this.grid[coords[i][0]][coords[i][1]] = GRIDSTATES.Empty;
+        }
+        this.boatsOnBoard.pop(boat); // This can't possibly work?
+    };
 
-  };
+    this.tryMoveBoat = function(boat, newCoords) {
 
-  this.hasBoat = function (coords) {
+    };
 
-  };
+    this.hasBoat = function(coords) {
+        return this.grid[coords[0]][coords[1]] === GRIDSTATES.Boat;
+    };
 
-  this.markGrid = function (coords, state) {
+    this.markGrid = function(coords, state) {
+        this.grid[coords[0]][coords[1]] = state;
+    };
 
-  };
-
-  this.init();
+    this.init();
 }
 
-function Boat (startCoords, orientation, length)
-{
-  this.startCoords = startCoords;
-  this.orientation = orientation;
-  this.length = length;
+function Boat(type, startCoords, orientation) {
+    this.type = type;
+    this.length = type; // Should have it's own configurable array
+    this.startCoords = startCoords;
+    this.orientation = orientation;
 
-  this.collidesWith = function (boat) {
+    this.coordinates = function() {
+        // BUGGY
+        var coords = [];
+        coords.push(this.startCoords);
+        for (var i = 1; i < this.length; i++) {
+            if (orientation === ORIENTATION.HORIZONTAL) {
+                coords.push([this.startCoords[0], this.startCoords[1] + i]);
+            } else if (orientation === ORIENTATION.VERTICAL) {
+                coords.push([LETTERS[LETTERSTONUM[this.startCoords[0]] + i], this.startCoords[1]]);
+            }
+        }
+        return coords;
+	}
 
-  };
+    this.collidesWith = function(otherBoat) {
+        // BUGGY
+        for (otherBoatCoords in otherBoat.coordinates()) {
+            for (thisBoatsCoords in this.coordinates()) {
+                if (otherBoatCoords.toString() == thisBoatsCoords.toString()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
