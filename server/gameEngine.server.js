@@ -1,25 +1,41 @@
 /* Server */
-// var app = require('express')();
-// var http = require('http').Server(app);
-// var io = require('socket.io')(http);
-//
-// var serverPort = 3000;
-//
-// console.log("Listening on port: " + serverPort);
-//
-// io.on('connection', function(socket){
-//
-//   console.log('a user connected');
-//
-//   socket.on('name', function(data){
-//     game.registerNewPlayer(socket.id, data);
-//   });
-//
-// });
-//
-// http.listen(serverPort, function(){
-//   console.log('listening on *:' + serverPort);
-// });
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+var serverPort = 3000;
+var clients = {};
+
+console.log("Listening on port: " + serverPort);
+
+io.on('connection', function(socket){
+
+  console.log('a user connected');
+
+  socket.on('name', function(data){
+    game.registerNewPlayer(socket.id, data);
+    clients[socket.id] = socket;
+  });
+
+  socket.on('boatDropped', function(data){
+    game.tryPlaceBoat(socket.id, new Boat(1, data, ORIENTATION.HORIZONTAL));
+
+    var playerBoard = game.getPlayer(socket.id).board.playerView();
+    var playerViewJson = JSON.stringify(playerBoard);
+    console.log(playerViewJson);
+
+    socket.emit("grid", playerViewJson);
+  });
+
+});
+
+http.listen(serverPort, function(){
+  console.log('listening on *:' + serverPort);
+});
+
+function sendToClient(){
+
+}
 
 /* Server end */
 

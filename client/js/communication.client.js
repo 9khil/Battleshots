@@ -11,7 +11,20 @@ var socket = io('http://localhost:3000');
     console.log("disconnect");
   });
 
+  socket.on('grid', function(data){
+    var parsedData = JSON.parse(data);
+
+    console.log(parsedData);
+
+  });
+
+
+
 
 function sendMessageToServer(message){
   socket.emit(message.messageType, message.messageContent);
+
+  setInterval(function(){
+      socket.emit("boatDropped", ["A", 5]);
+  }, 5000);
 }
