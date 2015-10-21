@@ -28,3 +28,14 @@ function setName(name){
   var el = document.getElementById("name");
   el.innerHTML = name;
 }
+
+
+function dropBoat(ev){
+  ev.preventDefault();
+  console.log(ev.srcElement);
+  ev.srcElement.style.backgroundColor = "red";
+}
+
+function allowDrop(ev){
+  ev.preventDefault();
+}
