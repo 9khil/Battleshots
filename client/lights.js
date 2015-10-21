@@ -1,6 +1,12 @@
 //var map = require('./gridMapper.js');
 var leds = require('rpi-ws2801');
-
+var ColorEnum = {
+  White : "[255,255,255]",
+  Blue : "[0,0,255]",
+  Green : "[0,255,0]",
+  Red : "[255,0,0]",
+  Black : "[0,0,0]"
+};
 
 //test
 controlLights(["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10"], "White");
@@ -49,13 +55,7 @@ function setLights(pos, color){
 //   }
 // }
 
-var ColorEnum = {
-  White : "[255,255,255]",
-  Blue : "[0,0,255]",
-  Green : "[0,255,0]",
-  Red : "[255,0,0]",
-  Black : "[0,0,0]"
-};
+
 
 function mapColor(color){
   switch(color){
