@@ -163,7 +163,6 @@ function Game() {
         console.log("Player 1: ");
         console.log(this.player1.name);
         console.log(this.player1.id);
-
       }else{
         console.log("No player 1");
       }
@@ -266,12 +265,12 @@ function Player(id, name) {
 }
 
 function Board() {
-    this.grid = [];
+    this.grid = {};
     this.boatsOnBoard = [];
 
     this.init = function() {
         for (var i in LETTERS) {
-            this.grid[LETTERS[i]] = [];
+            this.grid[LETTERS[i]] = {};
             for (var num = 1; num <= 10; num++) {
                 this.grid[LETTERS[i]][num] = GRIDSTATES.Empty;
             }
@@ -283,9 +282,9 @@ function Board() {
     };
 
     this.enemyView = function() {
-        var enemyView = []
+        var enemyView = {}
         for (var i in LETTERS) {
-            enemyView[LETTERS[i]] = [];
+            enemyView[LETTERS[i]] = {};
             for (var num = 1; num <= 10; num++) {
                 if (this.grid[LETTERS[i]][num] !== GRIDSTATES.Hit || this.grid[LETTERS[i]][num] !== GRIDSTATES.Miss) {
                     enemyView[LETTERS[i]][num] = GRIDSTATES.Water;
@@ -298,7 +297,6 @@ function Board() {
     };
 
     this.tryPlaceBoat = function(boatToPlace) {
-        //ADD CHECK FOR EDGE CASES EITHER HERE OR IN BOAT CONSTRUCTOR
         for (var i in this.boatsOnBoard) {
             var boatOnBoard = this.boatsOnBoard[i];
             if (boatOnBoard.collidesWith(boatToPlace)) {
