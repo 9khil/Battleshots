@@ -1,25 +1,25 @@
 /* Server */
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-
-var serverPort = 3000;
-
-console.log("Listening on port: " + serverPort);
-
-io.on('connection', function(socket){
-
-  console.log('a user connected');
-
-  socket.on('name', function(data){
-    game.registerNewPlayer(socket.id, data);
-  });
-
-});
-
-http.listen(serverPort, function(){
-  console.log('listening on *:' + serverPort);
-});
+// var app = require('express')();
+// var http = require('http').Server(app);
+// var io = require('socket.io')(http);
+//
+// var serverPort = 3000;
+//
+// console.log("Listening on port: " + serverPort);
+//
+// io.on('connection', function(socket){
+//
+//   console.log('a user connected');
+//
+//   socket.on('name', function(data){
+//     game.registerNewPlayer(socket.id, data);
+//   });
+//
+// });
+//
+// http.listen(serverPort, function(){
+//   console.log('listening on *:' + serverPort);
+// });
 
 /* Server end */
 
@@ -40,10 +40,10 @@ FLEET = {
     4: 1,   //Battleship
     5: 1    //Aircraft carriers
 };
-ORIENTATION = [
-    "HORIZONTAL",
-    "VERTICAL"
-];
+ORIENTATION = {
+    "HORIZONTAL" : "horizontal",
+    "VERTICAL": "vertical"
+};
 GRIDSTATES = {
     "Empty": 0,
     "Water": 1,
@@ -51,19 +51,19 @@ GRIDSTATES = {
     "Hit": 3,
     "Miss": 4
 };
-LETTERS = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J"
-];
-NUMTOLETTERS = {
+// LETTERS = [
+//     "A",
+//     "B",
+//     "C",
+//     "D",
+//     "E",
+//     "F",
+//     "G",
+//     "H",
+//     "I",
+//     "J"
+// ];
+LETTERS = {
     1: "A",
     2: "B",
     3: "C",
@@ -133,8 +133,8 @@ has players
 TEST CODE
 */
 var game = new Game();
-//var jk = game.registerNewPlayer(1, "JK");
-//var nikhil = game.registerNewPlayer(2, "9khil");
+// var jk = game.registerNewPlayer(1, "JK");
+// var nikhil = game.registerNewPlayer(2, "9khil");
 //var stian = game.registerNewPlayer(3, "Stian");
 
 
@@ -299,8 +299,10 @@ function Board() {
 
     this.tryPlaceBoat = function(boatToPlace) {
         //ADD CHECK FOR EDGE CASES EITHER HERE OR IN BOAT CONSTRUCTOR
-        for (var i = 0; i < this.boatsOnBoard.length; i++) {
-            if (this.boatsOnBoard[i].collidesWith(boatToPlace)) {
+        for (var i in this.boatsOnBoard) {
+            var boatOnBoard = this.boatsOnBoard[i];
+            if (boatOnBoard.collidesWith(boatToPlace)) {
+                console.log("Boat cannot be placed. Collides with boat: " + boatOnBoard.coordinates().toString());
                 return false;
             }
         }
@@ -342,11 +344,23 @@ function Board() {
 function Boat(type, startCoords, orientation) {
     this.type = type;
     this.length = type; // Should have it's own configurable array
-    this.startCoords = startCoords;
     this.orientation = orientation;
 
+    this.validateStartCoords = function(startCoords) {
+        if (this.orientation === ORIENTATION.VERTICAL && LETTERSTONUM[startCoords[0]] + this.length > 10) {
+            throw "Not a valid first coordinate: " + startCoords[0] + ", for a boat of length: " + this.length + ", and orientation: " + this.orientation + ". Boat would be out of bounds of the board.";
+        }
+
+        if (this.orientation === ORIENTATION.HORIZONTAL && startCoords[1] + this.length > 10) {
+            throw "Not a valid second coordinate: " + startCoords[1] + ", for a boat of length: " + this.length + ", and orientation: " + this.orientation + ". Boat would be out of bounds of the board.";
+        }
+
+        return startCoords;
+    };
+
+    this.startCoords = this.validateStartCoords(startCoords);
+
     this.coordinates = function() {
-        // BUGGY
         var coords = [];
         coords.push(this.startCoords);
         for (var i = 1; i < this.length; i++) {
@@ -357,17 +371,18 @@ function Boat(type, startCoords, orientation) {
             }
         }
         return coords;
-	}
+	};
 
     this.collidesWith = function(otherBoat) {
-        // BUGGY
-        for (otherBoatCoords in otherBoat.coordinates()) {
-            for (thisBoatsCoords in this.coordinates()) {
-                if (otherBoatCoords.toString() == thisBoatsCoords.toString()) {
+        var thisBoatsCoords = this.coordinates();
+        for (var coord in thisBoatsCoords) {
+            var otherBoatCoords = otherBoat.coordinates();
+            for (var otherCoord in otherBoatCoords) {
+                if (thisBoatsCoords[coord].toString() === otherBoatCoords[otherCoord].toString()) {
                     return true;
                 }
             }
         }
         return false;
-    }
+    };
 }
