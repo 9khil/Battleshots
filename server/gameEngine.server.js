@@ -1,3 +1,28 @@
+/* Server */
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+var serverPort = 3000;
+
+console.log("Listening on port: " + serverPort);
+
+io.on('connection', function(socket){
+
+  console.log('a user connected');
+
+  socket.on('name', function(data){
+    game.registerNewPlayer(socket.id, data);
+  });
+
+});
+
+http.listen(serverPort, function(){
+  console.log('listening on *:' + serverPort);
+});
+
+/* Server end */
+
 /*
 ENUMS
 */
@@ -108,11 +133,10 @@ has players
 TEST CODE
 */
 var game = new Game();
-var jk = game.registerNewPlayer(1, "JK");
-var nikhil = game.registerNewPlayer(2, "9khil");
-var stian = game.registerNewPlayer(3, "Stian");
-console.log(game.getPlayer(1));
-console.log(game.getPlayer(2));
+//var jk = game.registerNewPlayer(1, "JK");
+//var nikhil = game.registerNewPlayer(2, "9khil");
+//var stian = game.registerNewPlayer(3, "Stian");
+
 
 function Game() {
     this.player1;
@@ -129,9 +153,34 @@ function Game() {
         } else {
             return console.log("Game in progress.");
         }
+
+        this.printPlayers();
     };
 
+    this.printPlayers = function(){
+
+      if (typeof this.player1 !== 'undefined') {
+        console.log("Player 1: ");
+        console.log(this.player1.name);
+        console.log(this.player1.id);
+
+      }else{
+        console.log("No player 1");
+      }
+
+      if (typeof this.player2 !== 'undefined'){
+        console.log("Player 2: ");
+        console.log(this.player2.name);
+        console.log(this.player2.id);
+      }else{
+        console.log("No player 2");
+      }
+
+
+    }
+
     this.getPlayer = function(playerId) {
+
         if (typeof this.player1 !== 'undefined' && this.player1.id == playerId) {
             return this.player1;
         } else if (typeof this.player2 !== 'undefined' && this.player2.id == playerId) {
