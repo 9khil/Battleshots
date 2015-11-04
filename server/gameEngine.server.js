@@ -19,8 +19,7 @@ io.on('connection', function(socket){
 
   socket.on('boatDropped', function(boat){
     console.log('Placed boat', boat);
-    game.tryPlaceBoat(socket.id, new Boat(boat.boattype, boat.startCoords, boat.orientation));
-    //game.tryPlaceBoat(socket.id, new Boat(1, data, ORIENTATION.HORIZONTAL));
+    game.tryPlaceBoat(socket.id, new Boat(boat.type, boat.startCoords, boat.orientation));
 
     var playerBoard = game.getPlayer(socket.id).board.playerView();
     var playerViewJson = JSON.stringify(playerBoard);
@@ -28,6 +27,10 @@ io.on('connection', function(socket){
 
     socket.emit("grid", playerViewJson);
   });
+
+  socket.on('error', function(e){
+    console.log(e.message);
+  })
 
 });
 
