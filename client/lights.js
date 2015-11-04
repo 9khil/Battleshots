@@ -31,7 +31,6 @@ function init(){
 function controlLights(grid){
 
   for(var i=0; i<=99;i++){
-
     var coord = newGridMapper(i);
 
     setLight(i, colorFunction(grid[coord[0]][coord[1]]));
@@ -132,23 +131,23 @@ GRIDSTATES = {
 function newGridMapper(ledNumber){
 
   if(ledNumber >= 0 && ledNumber < 10){
-    return ["A",ledNumber];
+    return ["A",ledNumber+1];
   }else if(ledNumber >= 10 && ledNumber < 19){
     return ["B",20-ledNumber];
   }else if(ledNumber >= 20 && ledNumber < 29){
-    return ["C", ledNumber];
+    return ["C", ledNumber+1];
   }else if(ledNumber >= 30 && ledNumber < 39){
     return ["D", 20-ledNumber];
   }else if(ledNumber >= 40 && ledNumber < 49){
-    return ["E", ledNumber];
+    return ["E", ledNumber+1];
   }else if(ledNumber >= 50 && ledNumber < 59){
     return ["F", 20-ledNumber];
   }else if(ledNumber >= 60 && ledNumber < 69){
-    return ["G", ledNumber];
+    return ["G", ledNumber+1];
   }else if(ledNumber >= 70 && ledNumber < 79){
     return ["H", 20-ledNumber];
   }else if(ledNumber >= 80 && ledNumber < 89){
-    return ["I", ledNumber];
+    return ["I", ledNumber+1];
   }else if(ledNumber >= 90 && ledNumber < 99){
     return ["J", 20-ledNumber];
   }
