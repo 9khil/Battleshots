@@ -23,8 +23,4 @@ var socket = io('http://localhost:3000');
 
 function sendMessageToServer(message){
   socket.emit(message.messageType, message.messageContent);
-
-  setInterval(function(){
-      socket.emit("boatDropped", ["A", 5]);
-  }, 5000);
 }

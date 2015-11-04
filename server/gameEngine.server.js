@@ -17,8 +17,9 @@ io.on('connection', function(socket){
     clients[socket.id] = socket;
   });
 
-  socket.on('boatDropped', function(data){
-    game.tryPlaceBoat(socket.id, new Boat(1, data, ORIENTATION.HORIZONTAL));
+  socket.on('boatDropped', function(boat){
+    game.tryPlaceBoat(socket.id, new Boat(boat.type, boat.startCoords, boat.orientation));
+    //game.tryPlaceBoat(socket.id, new Boat(1, data, ORIENTATION.HORIZONTAL));
 
     var playerBoard = game.getPlayer(socket.id).board.playerView();
     var playerViewJson = JSON.stringify(playerBoard);

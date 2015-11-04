@@ -33,8 +33,10 @@ function setName(name){
 function dropBoat(ev){
   ev.preventDefault();
   console.log(ev.srcElement);
-  var data = JSON.parse(ev.dataTransfer.getData('text/plain'));
-  console.log('data', data);
+  var boat = JSON.parse(ev.dataTransfer.getData('text/plain'));
+  boat.startCoords = ev.srcElement.className;
+    sendMessageToServer({messageType: "boatDropped", messageContent: boat});
+  console.log('data', boat);
   ev.srcElement.style.backgroundColor = "red";
 }
 
