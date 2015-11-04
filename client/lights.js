@@ -93,6 +93,7 @@ function colorFunction(number){
       return "[255,0,0]"; //red
     case 4:
       return "[0,255,0]"; //green
+    }
 }
 
 var COLORENUM = {
