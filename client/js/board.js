@@ -34,6 +34,7 @@ function dropBoat(ev){
   ev.preventDefault();
   console.log(ev.srcElement);
   var data = JSON.parse(ev.dataTransfer.getData('text/plain'));
+  //yolo
   var boat = {
     type: parseInt(data.boattype),
     orientation: data.orientation,
