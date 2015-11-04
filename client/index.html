@@ -39,13 +39,17 @@
         </div>
 
         <div class="row">
-          <div class="twelve columns">
+          <div class="seven columns">
             <h2>Battleshots</h2>
+               
+          </div>
+          <div class="five columns">        
+          <h3>Boats</h3>
           </div>
         </div>
 
         <div class="row">
-          <div class="eight columns">
+          <div class="seven columns">
             <div id="board">
 
                 <div class="letterRow">
@@ -204,22 +208,41 @@
             </div>
           </div>
 
-          <div class="four columns">
+          <div class="three columns">
+
             <div id="boats">
-              <h3>Boats</h3>
+   
 
-                <div draggable="true" data-boattype="1" class="boat type-1"></div>
+                <div draggable="true" data-boattype="1" class="boat type-1" ondragstart="startDrag(event)"></div>
 
-                <div draggable="true" data-boattype="2" class="boat type-2"></div>
+                <div draggable="true" data-boattype="2" class="boat type-2" ondragstart="startDrag(event)"></div>
 
-                <div draggable="true" data-boattype="3" class="boat type-3"></div>
+                <div draggable="true" data-boattype="3" class="boat type-3" ondragstart="startDrag(event)"></div>
 
-                <div draggable="true" data-boattype="4" class="boat type-4"></div>
+                <div draggable="true" data-boattype="4" class="boat type-4" ondragstart="startDrag(event)"></div>
 
-                <div draggable="true" data-boattype="5" class="boat type-5"></div>
+                <div draggable="true" data-boattype="5" class="boat type-5" ondragstart="startDrag(event)"></div>
+
+         
 
             </div>
           </div>
+          <div class="one columns">
+            <div id="boats">
+                <div draggable="true" data-boattype="2" data-orientation="vertical" class="boat type-2-vertical" ondragstart="startDrag(event)"></div>
+
+                <div draggable="true" data-boattype="3" data-orientation="vertical" class="boat type-3-vertical" ondragstart="startDrag(event)"></div> 
+          </div>
+
+          </div>
+                    <div class="one columns">
+            <div id="boats">
+
+                <div draggable="true" data-boattype="4" data-orientation="vertical" class="boat type-4-vertical" ondragstart="startDrag(event)"></div>
+
+                <div draggable="true" data-boattype="5" data-orientation="vertical" class="boat type-5-vertical" ondragstart="startDrag(event)"></div>
+          </div>
+            </div>  
 
 
         </div>

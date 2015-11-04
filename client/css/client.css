@@ -64,3 +64,24 @@ Boats
   width: 200px;
   height: 40px;
 }
+
+
+.boat.type-2-vertical {
+  width: 40px;
+  height: 80px;
+}
+
+.boat.type-3-vertical {
+  width: 40px;
+  height: 120px;
+}
+
+.boat.type-4-vertical {
+  width: 40px;
+  height: 160px;
+}
+
+.boat.type-5-vertical {
+  width: 40px;
+  height: 200px;
+}
