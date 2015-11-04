@@ -6,8 +6,8 @@ function nameKeyup(event, element){
       sendMessageToServer({messageType: "name", messageContent: element.value});
       setState("showBoard");
       setName(element.value);
-    }else
-      element.placeholder = "Enter name..!";
+    } else
+    element.placeholder = "Enter name..!";
   }
 }
 
@@ -15,10 +15,10 @@ function nameKeyup(event, element){
 function setState(state){
   switch (state) {
     case "showBoard":
-      $("#stepOne").fadeOut('slow', function(){
-          $("#stepTwo").fadeIn();
-      });
-      break;
+    $("#stepOne").fadeOut('slow', function(){
+      $("#stepTwo").fadeIn();
+    });
+    break;
     default:
 
   }
@@ -34,8 +34,8 @@ function dropBoat(ev){
   ev.preventDefault();
   console.log(ev.srcElement);
   var boat = JSON.parse(ev.dataTransfer.getData('text/plain'));
-  boat.startCoords = ev.srcElement.className;
-    sendMessageToServer({messageType: "boatDropped", messageContent: boat});
+  boat.startCoords = [ev.srcElement.className.substring(0, 1), ev.srcElement.className.substring(1,2)];
+  sendMessageToServer({messageType: "boatDropped", messageContent: boat});
   console.log('data', boat);
   ev.srcElement.style.backgroundColor = "red";
 }
@@ -46,5 +46,5 @@ function allowDrop(ev){
 
 function startDrag(event) {
   event.dataTransfer.setData('text/plain', JSON.stringify(event.srcElement.dataset));
-     console.log(event);
+  console.log(event);
 }
