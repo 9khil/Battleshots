@@ -133,7 +133,7 @@ function newGridMapper(ledNumber){
   if(ledNumber > 0 && ledNumber < 10){
     return ["A",ledNumber];
   }else if(ledNumber > 10 && ledNumber < 19){
-    return ["B",20-ledNumber)];
+    return ["B",20-ledNumber];
   }else if(ledNumber > 20 && ledNumber < 29){
     return ["C", ledNumber];
   }else if(lednumber > 30 && lednumber < 39){
