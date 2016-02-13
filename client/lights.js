@@ -8,7 +8,7 @@ process.on( 'SIGINT', function() {
   leds.clear();
   leds.disconnect();
   process.exit( )
-})
+});
 
 LETTERS = {
     1: "A",
@@ -50,6 +50,10 @@ function controlLights(grid){
 
   }
   leds.update();
+
+
+  //superstygg hack for å holde js i live. må fjernes!!
+  setInterval(function(){}, 10000);
 }
 
 function setLight(pos, color){
