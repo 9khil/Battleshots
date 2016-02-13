@@ -4,8 +4,10 @@
   "description": "Battleshots client",
   "dependencies": {
     "express": "4.10.2",
+    "finalhandler": "^0.4.1",
+    "rpi-ws2801": "*",
+    "serve-static": "^1.10.2",
     "socket.io": "1.3.7",
-    "socket.io-client": "1.3.7",
-    "rpi-ws2801": "*"
+    "socket.io-client": "1.3.7"
   }
 }
