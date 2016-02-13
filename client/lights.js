@@ -1,6 +1,15 @@
 //var map = require('./gridMapper.js');
 var leds = require('rpi-ws2801');
 
+// disconnect on Ctrl-C (not necessary but we will play nice)
+process.on( 'SIGINT', function() {
+  console.log( "\nshutting down from (Ctrl-C)" )
+  // clear LED stripe and close conection to SPI
+  leds.clear();
+  leds.disconnect();
+  process.exit( )
+})
+
 LETTERS = {
     1: "A",
     2: "B",
