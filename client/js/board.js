@@ -40,7 +40,7 @@ function dropBoat(ev){
     startCoords: [ev.srcElement.className.substring(0, 1), parseInt(ev.srcElement.className.substring(1,2))]
   }
   sendMessageToServer({messageType: "boatDropped", messageContent: boat});
-  console.log('data', boat);
+//  console.log('data', boat);
   ev.srcElement.style.backgroundColor = "red";
 }
 

@@ -1,6 +1,6 @@
 
 // Open socket for incoming user connections (tablet, phones, computers etc)
-var leds = require('rpi-ws2801');
+
 var http = require('http');
 var finalhandler = require('finalhandler');
 var serveStatic = require('serve-static');
