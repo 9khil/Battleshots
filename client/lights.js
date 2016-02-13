@@ -18,6 +18,9 @@ LETTERS = {
 init();
 
 function init(){
+
+  leds.connect(100);
+
   grid = {};
   for (var i in LETTERS) {
     grid[LETTERS[i]] = {};
@@ -31,7 +34,7 @@ function init(){
 function controlLights(grid){
 
   for(var i=0; i<=99;i++){
-  
+
     var coord = newGridMapper(i);
 
     setLight(i, colorFunction(grid[coord[0]][coord[1]]));
@@ -84,24 +87,24 @@ function setLights(pos, color){
 function colorFunction(number){
   switch(number){
     case 0:
-      return "[0,0,0]"; //black
+      return [0,0,0]; //black
     case 1:
-      return "[0,0,255]"; //blue
+      return [0,0,255]; //blue
     case 2:
-      return "[255,255,255]"; //white
+      return [255,255,255]; //white
     case 3:
-      return "[255,0,0]"; //red
+      return [255,0,0]; //red
     case 4:
-      return "[0,255,0]"; //green
+      return [0,255,0]; //green
     }
 }
 
 var COLORENUM = {
-  White : "[255,255,255]", //white
-  Blue : "[0,0,255]", //blue
-  Green : "[0,255,0]", //green
-  Red : "[255,0,0]", //red
-  Black : "[0,0,0]" //black
+  White : [255,255,255], //white
+  Blue : [0,0,255], //blue
+  Green : [0,255,0], //green
+  Red : [255,0,0], //red
+  Black : [0,0,0] //black
 };
 
 function mapColor(color){
