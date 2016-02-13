@@ -17,7 +17,7 @@ var socket = io('http://10.0.0.38:3000');
 
     console.log("Got a new grid!!");
 
-    controlLights(data);
+    //controlLights(data);
 
   });
 
