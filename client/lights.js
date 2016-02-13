@@ -23,11 +23,8 @@ LETTERS = {
     10: "J"
 };
 
-
-init();
-
-function init(){
-
+function initLeds(){
+  console.log("lights.js: Initializing leds!");
   leds.connect(100);
 
   grid = {};

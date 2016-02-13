@@ -2,7 +2,8 @@ var socket = io('http://10.0.0.38:3000');
 
 // connection to GameEngine
   socket.on('connect', function(){
-    console.log("Client connected to server!");
+    console.log("Client connected to server! Initializing LEDS");
+    initLeds();
   });
   socket.on('event', function(data){
     console.log("event: ");
@@ -17,7 +18,7 @@ var socket = io('http://10.0.0.38:3000');
 
     console.log("Got a new grid!!");
 
-    //controlLights(data);
+    controlLights(data);
 
   });
 
