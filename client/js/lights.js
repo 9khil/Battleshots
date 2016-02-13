@@ -1,5 +1,5 @@
 //var map = require('./gridMapper.js');
-var leds = require('rpi-ws2801');
+
 
 // disconnect on Ctrl-C (not necessary but we will play nice)
 process.on( 'SIGINT', function() {
