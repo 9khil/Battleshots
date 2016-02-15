@@ -28,6 +28,11 @@ io.on('connection', function(socket){
     socket.emit("grid", playerViewJson);
   });
 
+  socket.on("hei", function(){
+    console.log("jadda");
+    socket.emit("test", "test");
+  });
+
   socket.on('error', function(e){
     console.log(e.message);
   })
